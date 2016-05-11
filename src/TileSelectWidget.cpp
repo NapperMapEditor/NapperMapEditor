@@ -4,14 +4,30 @@
 
 TileSelectWidget::TileSelectWidget(QWidget *parent) : QWidget(parent)
 {
-	comboBox_ = new TileSetComboBox(this);
-	listView_ = new QListView(this);
+	gridView_ = true;
 
-	layout_ = new QVBoxLayout(this);
-	layout_->addWidget(comboBox_);
-	layout_->addWidget(listView_);
+	comboBox_ = new TileSetComboBox(this);
+
+	listView_ = new QListView(this);
+	listView_->setGridSize(QSize(32,32));
+	listView_->setDragEnabled(true);
+	listView_->setResizeMode(QListView::Adjust);
+	listView_->setViewMode(QListView::IconMode);
+
+	viewModeButton_ = new QPushButton(this);
+
+	buttonLayout_ = new QHBoxLayout(Q_NULLPTR);
+	buttonLayout_->addWidget(comboBox_);
+	buttonLayout_->addWidget(viewModeButton_);
+
+	mainLayout_ = new QVBoxLayout(this);
+	mainLayout_->addLayout(buttonLayout_);
+	mainLayout_->addWidget(listView_);
+
+	setLayout(mainLayout_);
 
 	connect(comboBox_, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TileSelectWidget::selectTileSet);
+	connect(viewModeButton_, &QPushButton::pressed, this, &TileSelectWidget::toggleViewMode);
 }
 
 void TileSelectWidget::selectTileSet(int set)
@@ -56,12 +72,30 @@ void TileSelectWidget::loadDirectory(const QString &path)
 			tileSet->insertRows(row, 1, QModelIndex());
 			QModelIndex index = tileSet->index(row, 0, QModelIndex());
 			tileSet->setData(index, Tile(fName));
+			tileSet->setGridMode(true);
 		}
 
 		tileSet_.append(tileSet);
 	}
 
-	// TODO: Use custom delegate so can switch to QListView::IconMode
 	listView_->setModel(tileSet_[0]);
-	listView_->setDragEnabled(true);
+}
+
+void TileSelectWidget::toggleViewMode()
+{
+	gridView_ = !gridView_;
+
+	for(auto t : tileSet_)
+	{
+		t->setGridMode(gridView_);
+	}
+
+	if (gridView_)
+	{
+		listView_->setViewMode(QListView::IconMode);
+	}
+	else
+	{
+		listView_->setViewMode(QListView::ListMode);
+	}
 }

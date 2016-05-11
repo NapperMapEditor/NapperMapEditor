@@ -10,6 +10,7 @@ class TileModel : public QAbstractListModel
 {
 public:
 	TileModel(QObject *parent);
+
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &index, int role) const;
 	Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -18,8 +19,11 @@ public:
 	bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex());
 	bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
 
+	void setGridMode(bool mode);
+
 private:
 	QList<Tile> tiles_;
+	bool gridMode_;
 };
 
 #endif // TILEMODEL_H

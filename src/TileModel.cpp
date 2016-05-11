@@ -2,6 +2,7 @@
 
 TileModel::TileModel(QObject *parent) : QAbstractListModel(parent)
 {
+	gridMode_ = true;
 }
 
 int TileModel::rowCount(const QModelIndex &parent) const
@@ -20,6 +21,16 @@ QVariant TileModel::data(const QModelIndex &index, int role) const
 	switch(role)
 	{
 	case Qt::DisplayRole:
+	{
+		if (gridMode_)
+		{
+			return "";
+		}
+		else
+		{
+			return tiles_[index.row()].getName();
+		}
+	}
 	case Qt::ToolTipRole:
 	{
 		return tiles_[index.row()].getName();
@@ -91,4 +102,9 @@ bool TileModel::removeRows(int position, int rows, const QModelIndex &parent)
 	endRemoveRows();
 	return true;
 
+}
+
+void TileModel::setGridMode(bool mode)
+{
+	gridMode_ = mode;
 }
