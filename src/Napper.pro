@@ -16,10 +16,23 @@ SOURCES +=\
         MainWindow.cpp \
     Main.cpp \
     GridGraphicsView.cpp \
-    GraphicsView.cpp
+    GraphicsView.cpp \
+    MainWidget.cpp \
+    Tile.cpp \
+    TileModel.cpp \
+    TileSelectWidget.cpp \
+    TileSetComboBox.cpp
 
 HEADERS  += MainWindow.hpp \
     GridGraphicsView.hpp \
-    GraphicsView.hpp
+    GraphicsView.hpp \
+    MainWidget.hpp \
+    Tile.hpp \
+    TileModel.hpp \
+    TileSelectWidget.hpp \
+    TileSetComboBox.hpp
 
 FORMS    +=
+
+DISTFILES += \
+    Grid.pro.user
