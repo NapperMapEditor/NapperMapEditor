@@ -31,6 +31,7 @@ QVariant TileModel::data(const QModelIndex &index, int role) const
 			return tiles_[index.row()].getName();
 		}
 	}
+
 	case Qt::ToolTipRole:
 	{
 		return tiles_[index.row()].getName();
@@ -46,6 +47,11 @@ QVariant TileModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 	}
 	}
+}
+
+Tile TileModel::getTile(const QModelIndex &index)
+{
+	return tiles_[index.row()];
 }
 
 

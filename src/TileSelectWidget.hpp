@@ -14,10 +14,11 @@ class TileSelectWidget : public QWidget
 public:
 	TileSelectWidget(QWidget *parent);
 	void loadDirectory(const QString &path);
-	void toggleViewMode();
 
 private:
 
+	void currentChanged(const QModelIndex & current, const QModelIndex & previous);
+	void toggleViewMode();
 	void selectTileSet(int set);
 
 	QHBoxLayout *buttonLayout_;
@@ -29,6 +30,8 @@ private:
 
 	QList<TileModel*> tileSet_;
 	bool gridView_;
+	Tile currentTile_;
+	TileModel *currentModel_;
 };
 
 #endif // TILESELECTWIDGET_H

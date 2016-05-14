@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QIcon>
-#include <QImage>
+#include <QPixmap>
 
 class Tile
 {
@@ -12,7 +12,7 @@ public:
 	Tile(const QString &filePath);
 
 	const QIcon &getIcon() const;
-	const QImage &getImage() const;
+	const QPixmap &getImage() const;
 	const QString &getName() const;
 
 	void setName(const QString& name);
@@ -20,7 +20,7 @@ public:
 private:
 	QString name_;
 	QIcon icon_;
-	QImage image_;
+	QPixmap image_;
 
 };
 
